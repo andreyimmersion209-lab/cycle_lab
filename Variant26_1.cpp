@@ -10,14 +10,14 @@
 using namespace std;
 
 int main() {
-  const double startTime = 200.0;
-  const double transitionTime = 1000.0;
-  const double finishTime = 5000.0;
-  const double firstStep = 200.0;
-  const double secondStep = 1000.0;
+  double startTime = 200.0;
+  double transitionTime = 1000.0;
+  double finishTime = 5000.0;
+  double firstStep = 200.0;
+  double secondStep = 1000.0;
 
   double lambda1, lambda2, phi;
-  double coefficient, t, p;
+  double coefficient, firstTerm, secondTerm, t, p;
   int stepIndex;
 
   cout << "lambda1 (1/h) = ";
@@ -36,8 +36,9 @@ int main() {
   stepIndex = 0;
   t = startTime;
   do {
-    p = ((1.0 - coefficient) * exp(-2.0 * lambda1 * t) +
-        coefficient * exp(-lambda2 * t)) * 100.0;
+    firstTerm = (1.0 - coefficient) * exp(-2.0 * lambda1 * t);
+    secondTerm = coefficient * exp(-lambda2 * t);
+    p = (firstTerm + secondTerm) * 100.0;
     cout << t << " " << p << endl;
     ++stepIndex;
     t = startTime + stepIndex * firstStep;
@@ -46,8 +47,9 @@ int main() {
   stepIndex = 1;
   t = transitionTime + stepIndex * secondStep;
   while (t <= finishTime) {
-    p = ((1.0 - coefficient) * exp(-2.0 * lambda1 * t) +
-        coefficient * exp(-lambda2 * t)) * 100.0;
+    firstTerm = (1.0 - coefficient) * exp(-2.0 * lambda1 * t);
+    secondTerm = coefficient * exp(-lambda2 * t);
+    p = (firstTerm + secondTerm) * 100.0;
     cout << t << " " << p << endl;
     ++stepIndex;
     t = transitionTime + stepIndex * secondStep;
